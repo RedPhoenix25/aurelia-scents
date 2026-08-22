@@ -345,7 +345,7 @@ window.modalDirectWhatsApp = function(productId) {
   const sel = state.selectedSizes[productId] || (p.sizes?.[0]) || { volume: '50ml', price: p.price };
   sendOrderToWhatsApp({
     orderId: 'WA-' + Math.floor(1000 + Math.random() * 9000),
-    customer: { name: 'Customer', phone: '', address: 'To confirm on WhatsApp', city: 'Lagos', state: 'Lagos' },
+    customer: { name: 'Customer', phone: '', address: 'To confirm on WhatsApp', city: 'Enugu', state: 'Enugu State' },
     items: [{
       productId: p.id,
       name: p.name,
@@ -828,7 +828,7 @@ function setupEventListeners() {
     const del = sub >= (state.settings.free_delivery_threshold || 50000) ? 0 : (state.settings.standard_delivery_fee || 2500);
     sendOrderToWhatsApp({
       orderId: 'WA-' + Math.floor(1000 + Math.random() * 9000),
-      customer: { name: 'Customer', phone: '', address: 'To confirm on WhatsApp', city: 'Lagos', state: 'Lagos' },
+      customer: { name: 'Customer', phone: '', address: 'To confirm on WhatsApp', city: 'Enugu', state: 'Enugu State' },
       items: state.cart, subtotal: sub, deliveryFee: del, total: sub + del, paymentMethod: 'whatsapp_sync'
     });
   });

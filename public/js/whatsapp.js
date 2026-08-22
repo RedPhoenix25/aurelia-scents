@@ -40,7 +40,7 @@ ${lineItems}
 📍 *DELIVERY DESTINATION:*
 • *Recipient:* ${customer.name || 'Customer'}
 • *Phone:* ${customer.phone || 'Provided via Chat'}
-• *Address:* ${customer.address || ''}, ${customer.city || 'Lagos'}, ${customer.state || 'Lagos'}
+• *Address:* ${customer.address || ''}, ${customer.city || 'Enugu'}, ${customer.state || 'Enugu State'}
 ${customer.notes ? `• *Special Notes:* ${customer.notes}` : ''}
 
 ━━━━━━━━━━━━━━━━━━━━

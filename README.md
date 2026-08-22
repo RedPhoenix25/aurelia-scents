@@ -1,6 +1,6 @@
 # Aurelia Scents — Haute Parfumerie 👑
 
-> Mobile-First Luxury E-Commerce Storefront & Lightweight Admin Management Portal for Aurelia Scents, Lagos, Nigeria.
+> Mobile-First Luxury E-Commerce Storefront & Lightweight Admin Management Portal for Aurelia Scents, Enugu, Nigeria.
 
 ---
 
@@ -152,4 +152,4 @@ To change the store's official WhatsApp Concierge phone number:
 ---
 
 ## 📜 License & Ownership
-Created for **Aurelia Scents — Haute Parfumerie**, Lagos, Nigeria. All rights reserved.
+Created for **Aurelia Scents — Haute Parfumerie**, Enugu, Nigeria. All rights reserved.

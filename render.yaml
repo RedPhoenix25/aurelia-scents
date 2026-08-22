@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: aurelia-scents
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    branch: master
+    plan: free
+    autoDeploy: true

@@ -52,8 +52,8 @@ router.get('/track/:query', (req, res) => {
     status: order.status,
     createdAt: order.createdAt,
     recipient: order.customer?.name || 'Customer',
-    city: order.customer?.city || 'Lagos',
-    state: order.customer?.state || 'Lagos',
+    city: order.customer?.city || 'Enugu',
+    state: order.customer?.state || 'Enugu State',
     items: (order.items || []).map(i => ({ name: i.name, size: i.size, quantity: i.quantity, price: i.price })),
     total: order.total,
     deliveryFee: order.deliveryFee,
@@ -113,8 +113,8 @@ router.post('/', (req, res) => {
       phone: customer.phone,
       whatsapp: customer.whatsapp || customer.phone,
       address: customer.address || '',
-      city: customer.city || 'Lagos',
-      state: customer.state || 'Lagos',
+      city: customer.city || 'Enugu',
+      state: customer.state || 'Enugu State',
       notes: customer.notes || ''
     },
     items: items.map(item => ({
