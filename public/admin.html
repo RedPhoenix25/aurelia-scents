@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Aurelia Scents | Management Portal</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0a0908">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <!-- ── THEMED TOAST ───────────────────────────────────────────────── -->
+  <div id="admin-toast">
+    <i data-lucide="check" class="toast-icon lucide"></i>
+    <span id="admin-toast-text">Done</span>
+  </div>
+
+  <!-- ── CONFIRM DIALOG MODAL ──────────────────────────────────────── -->
+  <div class="admin-modal" id="confirm-modal">
+    <div class="confirm-dialog">
+      <div style="width:48px;height:48px;border-radius:50%;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;color:#f87171;">
+        <i data-lucide="alert-triangle" style="width:22px;height:22px;"></i>
+      </div>
+      <div class="confirm-dialog-title" id="confirm-title">Are you sure?</div>
+      <p class="confirm-dialog-sub" id="confirm-message">This action cannot be undone.</p>
+      <div class="confirm-dialog-actions">
+        <button class="btn-ghost" id="confirm-cancel-btn">Cancel</button>
+        <button class="btn-danger" id="confirm-ok-btn">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       1. LOGIN SCREEN
+       ════════════════════════════════════════════════════════════════ -->
+  <div id="login-screen">
+    <div class="login-card">
+      <div class="login-icon">
+        <i data-lucide="lock" style="width:22px;height:22px;"></i>
+      </div>
+      <h1 class="login-title">Aurelia Portal</h1>
+      <p class="login-sub">Enter credentials to manage inventory &amp; orders</p>
+
+      <div class="login-error" id="login-error"></div>
+
+      <form id="admin-login-form" style="display:flex;flex-direction:column;gap:12px;text-align:left;">
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label" for="login-username">Username</label>
+          <input type="text" id="login-username" class="form-input" placeholder="admin" autocomplete="username" required>
+        </div>
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="form-label" for="login-password">Password</label>
+          <input type="password" id="login-password" class="form-input" placeholder="••••••••" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%;margin-top:8px;" id="login-submit-btn">
+          <i data-lucide="key-round"></i>
+          Unlock Portal
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       2. ADMIN WORKSPACE
+       ════════════════════════════════════════════════════════════════ -->
+  <div id="admin-workspace">
+
+    <!-- ── TOP HEADER ──────────────────────────────────────────────── -->
+    <header class="admin-header">
+      <div class="admin-brand">
+        <span class="admin-brand-name">Aurelia Scents</span>
+        <span class="admin-brand-sub">Management Portal</span>
+      </div>
+      <div class="admin-header-actions">
+        <a href="/" target="_blank" class="btn-icon" title="View Storefront" aria-label="View Storefront">
+          <i data-lucide="external-link"></i>
+        </a>
+        <button id="btn-logout" class="btn-icon" title="Logout" aria-label="Logout" style="color:#f87171;">
+          <i data-lucide="log-out"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- ── MOBILE TABS (hidden on desktop) ─────────────────────────── -->
+    <nav class="admin-mobile-tabs" id="mobile-tabs" aria-label="Admin navigation">
+      <button class="mobile-tab-btn active" data-tab="tab-dashboard">
+        <i data-lucide="layout-dashboard"></i> Dashboard
+      </button>
+      <button class="mobile-tab-btn" data-tab="tab-products">
+        <i data-lucide="package"></i> Products
+      </button>
+      <button class="mobile-tab-btn" data-tab="tab-orders">
+        <i data-lucide="shopping-cart"></i> Orders
+      </button>
+      <button class="mobile-tab-btn" data-tab="tab-settings">
+        <i data-lucide="sliders"></i> Settings
+      </button>
+    </nav>
+
+    <!-- ── SIDEBAR NAV (desktop only) ──────────────────────────────── -->
+    <aside class="admin-sidebar" id="sidebar">
+      <div class="sidebar-label">Overview</div>
+      <button class="sidebar-nav-item active" data-tab="tab-dashboard">
+        <i data-lucide="layout-dashboard"></i> Dashboard
+      </button>
+
+      <div class="sidebar-label">Store</div>
+      <button class="sidebar-nav-item" data-tab="tab-products">
+        <i data-lucide="package"></i> Products &amp; Stock
+      </button>
+      <button class="sidebar-nav-item" data-tab="tab-orders">
+        <i data-lucide="shopping-cart"></i> Customer Orders
+      </button>
+
+      <div class="sidebar-label">Config</div>
+      <button class="sidebar-nav-item" data-tab="tab-settings">
+        <i data-lucide="sliders"></i> Store Settings
+      </button>
+
+      <div style="padding:20px 18px 0;border-top:1px solid rgba(255,255,255,0.05);margin-top:auto;">
+        <a href="/" target="_blank" class="sidebar-nav-item" style="display:flex;">
+          <i data-lucide="external-link"></i> View Storefront
+        </a>
+      </div>
+    </aside>
+
+    <!-- ── MAIN CONTENT ─────────────────────────────────────────────── -->
+    <main class="admin-main">
+
+      <!-- ══════════════════════════════════════════════════════════════
+           TAB 1: DASHBOARD
+           ══════════════════════════════════════════════════════════════ -->
+      <section id="tab-dashboard" class="tab-content active">
+
+        <!-- Metrics -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">
+              <i data-lucide="coins" style="color:var(--text-gold);"></i> Total Revenue
+            </div>
+            <div class="metric-val" id="metric-revenue" style="color:var(--text-gold);">₦0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">
+              <i data-lucide="shopping-bag"></i> Total Orders
+            </div>
+            <div class="metric-val" id="metric-orders">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">
+              <i data-lucide="alert-triangle" style="color:var(--status-low);"></i> Low Stock
+            </div>
+            <div class="metric-val" id="metric-low-stock" style="color:var(--status-low);">0</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">
+              <i data-lucide="ban" style="color:#f87171;"></i> Out of Stock
+            </div>
+            <div class="metric-val" id="metric-out-stock" style="color:#f87171;">0</div>
+          </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div style="padding:0 24px 28px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div class="metric-label" style="margin:0;">Recent Orders</div>
+            <button onclick="switchTab('tab-orders')" class="btn-ghost" style="padding:5px 12px;font-size:10px;">View All</button>
+          </div>
+          <div id="dashboard-recent-orders" style="display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════════════════════════════════════
+           TAB 2: PRODUCTS
+           ══════════════════════════════════════════════════════════════ -->
+      <section id="tab-products" class="tab-content">
+
+        <div class="section-hd">
+          <div>
+            <div class="section-hd-title">Product Inventory</div>
+            <div class="section-hd-sub">Toggle stock status, update quantities, add or edit fragrances</div>
+          </div>
+          <button class="btn-primary" id="btn-open-add-product">
+            <i data-lucide="plus"></i> Add Fragrance
+          </button>
+        </div>
+
+        <div class="admin-search-wrap" style="padding-top:16px;">
+          <i data-lucide="search" class="admin-search-icon" style="width:15px;height:15px;"></i>
+          <input type="text" id="admin-product-search" class="admin-search-input" placeholder="Search by name or category…" autocomplete="off">
+        </div>
+
+        <div class="admin-list" id="admin-products-list"></div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════════════════
+           TAB 3: ORDERS
+           ══════════════════════════════════════════════════════════════ -->
+      <section id="tab-orders" class="tab-content">
+
+        <div class="section-hd">
+          <div>
+            <div class="section-hd-title">Customer Orders</div>
+            <div class="section-hd-sub">Manage dispatch status and contact customers</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <label style="font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-muted);">Filter</label>
+            <select id="filter-order-status" class="status-select">
+              <option value="All">All Statuses</option>
+              <option value="Pending">Pending</option>
+              <option value="Processing">Processing</option>
+              <option value="Shipped">Shipped</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="admin-list" id="admin-orders-list"></div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════════════════
+           TAB 4: SETTINGS
+           ══════════════════════════════════════════════════════════════ -->
+      <section id="tab-settings" class="tab-content">
+        <div class="section-hd">
+          <div>
+            <div class="section-hd-title">Store Settings</div>
+            <div class="section-hd-sub">Configure delivery rates, WhatsApp number and announcements</div>
+          </div>
+        </div>
+
+        <div class="settings-wrap">
+          <form id="store-settings-form" style="display:flex;flex-direction:column;gap:14px;">
+            <div class="form-group">
+              <label class="form-label" for="set-whatsapp">WhatsApp Business Number (with country code)</label>
+              <input type="text" id="set-whatsapp" class="form-input" value="2347080097512" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="set-delivery-fee">Standard Delivery Fee (₦)</label>
+              <input type="number" id="set-delivery-fee" class="form-input" value="2500" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="set-free-threshold">Free Delivery Minimum (₦)</label>
+              <input type="number" id="set-free-threshold" class="form-input" value="50000" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="set-announcement">Announcement Banner Text</label>
+              <input type="text" id="set-announcement" class="form-input" value="Complimentary luxury velvet pouch on orders above ₦50,000">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="set-admin-password">Change Admin Password</label>
+              <input type="password" id="set-admin-password" class="form-input" placeholder="Leave blank to keep current password">
+            </div>
+            <button type="submit" class="btn-primary" style="width:auto;align-self:flex-start;">
+              <i data-lucide="save"></i> Save Settings
+            </button>
+          </form>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       PRODUCT ADD / EDIT MODAL
+       ════════════════════════════════════════════════════════════════ -->
+  <div class="admin-modal" id="product-form-modal">
+    <div class="admin-modal-box">
+      <div class="modal-hd">
+        <h2 class="modal-title" id="product-modal-heading">Add New Fragrance</h2>
+        <button class="btn-icon" id="btn-close-product-modal" aria-label="Close">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <form id="product-edit-form" style="display:flex;flex-direction:column;gap:10px;">
+        <input type="hidden" id="form-prod-id">
+
+        <div class="form-group">
+          <label class="form-label" for="form-prod-name">Fragrance Name *</label>
+          <input type="text" id="form-prod-name" class="form-input" required placeholder="e.g. Éclat Noir">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="form-prod-subtitle">Subtitle / Concentration</label>
+          <input type="text" id="form-prod-subtitle" class="form-input" placeholder="e.g. Extrait de Parfum">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" for="form-prod-category">Category</label>
+            <select id="form-prod-category" class="form-select">
+              <option value="Oud">Oud</option>
+              <option value="Woody">Woody</option>
+              <option value="Amber">Amber</option>
+              <option value="Floral">Floral</option>
+              <option value="Fresh">Fresh</option>
+              <option value="Citrus">Citrus</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" for="form-prod-badge">Badge</label>
+            <input type="text" id="form-prod-badge" class="form-input" placeholder="e.g. Bestseller">
+          </div>
+        </div>
+
+        <!-- Dynamic Volume (ml), Selling Price & Slash Price Variants -->
+        <div class="form-group" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:var(--r-xs);padding:12px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <div>
+              <label class="form-label" style="margin-bottom:2px;">Volume Sizes &amp; Pricing (ml) *</label>
+              <div style="font-size:10.5px;color:var(--text-muted);">Set selling price and optional slash (crossed-out) price</div>
+            </div>
+            <button type="button" class="btn-ghost" id="btn-add-size-row" style="font-size:10px;padding:4px 9px;">
+              <i data-lucide="plus" style="width:12px;height:12px;"></i> Add Size (ml)
+            </button>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 34px;gap:8px;padding-bottom:4px;margin-bottom:4px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:9.5px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--gold);">
+            <div>Volume (ml)</div>
+            <div>Selling Price (₦)</div>
+            <div>Slash Price (₦)</div>
+            <div></div>
+          </div>
+
+          <div id="form-sizes-container" style="display:flex;flex-direction:column;gap:8px;">
+            <!-- Injected by admin.js -->
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="form-prod-qty">Total Stock Units *</label>
+          <input type="number" id="form-prod-qty" class="form-input" required value="10" placeholder="10">
+        </div>
+
+        <!-- Direct Device Image Upload (No URL) -->
+        <div class="form-group">
+          <label class="form-label">Fragrance Photograph *</label>
+          <input type="file" id="form-prod-file" accept="image/png, image/jpeg, image/webp" style="display:none;">
+          <input type="hidden" id="form-prod-image-value">
+          
+          <div class="upload-dropzone" id="upload-dropzone">
+            <div class="upload-icon-wrap">
+              <i data-lucide="upload-cloud" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="upload-text-main">Tap to select photo from your device</div>
+            <div class="upload-text-sub">Supports PNG, JPG, or WEBP (Up to 15MB)</div>
+          </div>
+
+          <div class="upload-preview-container" id="upload-preview-container">
+            <img src="" alt="Uploaded fragrance preview" id="upload-preview-img" class="upload-preview-img">
+            <div class="upload-preview-bar">
+              <span style="font-size:11px;color:#fff;font-weight:500;" id="upload-filename-text">Photo selected</span>
+              <button type="button" class="btn-danger" id="btn-remove-image" style="padding:4px 10px;font-size:10px;">
+                <i data-lucide="trash-2" style="width:12px;height:12px;"></i> Change
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="form-prod-desc">Description</label>
+          <textarea id="form-prod-desc" class="form-textarea" rows="3" placeholder="Fragrance narrative and scent profile…"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width:100%;margin-top:8px;">
+          <i data-lucide="check"></i> Save Fragrance
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

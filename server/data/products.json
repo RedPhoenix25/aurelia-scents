@@ -1,0 +1,341 @@
+[
+  {
+    "id": "as-001",
+    "name": "Éclat Noir",
+    "subtitle": "Extrait de Parfum",
+    "tagline": "Intense. Elegant. Unforgettable.",
+    "category": "Woody",
+    "gender": "Unisex",
+    "badge": "Bestseller",
+    "price": 22000,
+    "compareAtPrice": 45000,
+    "stock_status": "IN_STOCK",
+    "stock_quantity": 9,
+    "description": "An intoxicating symphony of dark amber, smoked cedarwood, and velvet night jasmine. Crafted for the connoisseur who commands effortless presence.",
+    "sizes": [
+      {
+        "volume": "30ml",
+        "price": 22000,
+        "in_stock": true
+      },
+      {
+        "volume": "50ml",
+        "price": 38000,
+        "in_stock": true
+      },
+      {
+        "volume": "100ml",
+        "price": 65000,
+        "in_stock": true
+      }
+    ],
+    "notes": {
+      "top": "Black Pepper, Bergamot, Italian Mandarin",
+      "heart": "Night Jasmine, Cardamom, Damask Rose",
+      "base": "Smoked Cedar, Amber Resin, Tonka Bean, Vanilla"
+    },
+    "longevity": "12+ Hours",
+    "sillage": "Intense & Enveloping",
+    "image": "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80",
+    "featured": true,
+    "rating": 4.9,
+    "reviewsCount": 38,
+    "updatedAt": "2026-08-22T11:13:41.948Z"
+  },
+  {
+    "id": "as-002",
+    "name": "Lumière Dorée",
+    "subtitle": "Eau de Parfum",
+    "tagline": "Radiant & Captivating Gold.",
+    "category": "Amber",
+    "gender": "Women",
+    "badge": "Signature",
+    "price": 34000,
+    "compareAtPrice": 40000,
+    "stock_status": "IN_STOCK",
+    "stock_quantity": 11,
+    "description": "Golden warmth bottled in shimmering luxury. A delicate infusion of sun-drenched orange blossom, rare white saffron, and liquid golden amber.",
+    "sizes": [
+      {
+        "volume": "30ml",
+        "price": 19500,
+        "in_stock": true
+      },
+      {
+        "volume": "50ml",
+        "price": 34000,
+        "in_stock": true
+      },
+      {
+        "volume": "100ml",
+        "price": 58000,
+        "in_stock": true
+      }
+    ],
+    "notes": {
+      "top": "Orange Blossom, Golden Neroli, Sweet Mandarin",
+      "heart": "White Saffron, Honeyed Iris, Solar Jasmine",
+      "base": "Liquid Amber, Cashmere Musk, Vanilla Orchid"
+    },
+    "longevity": "10+ Hours",
+    "sillage": "Warm & Radiating",
+    "image": "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=800&q=80",
+    "featured": true,
+    "rating": 4.8,
+    "reviewsCount": 29
+  },
+  {
+    "id": "as-003",
+    "name": "Oud Impérial",
+    "subtitle": "Parfum Royale",
+    "tagline": "Deep, Rich & Mysterious Majesty.",
+    "category": "Oud",
+    "gender": "Unisex",
+    "badge": "Limited Edition",
+    "price": 46000,
+    "compareAtPrice": 55000,
+    "stock_status": "IN_STOCK",
+    "stock_quantity": 4,
+    "description": "An aristocratic blend of aged Cambodian oud, spiced leather, and wild Bulgarian rose. A fragrance of pure authority and distinction.",
+    "sizes": [
+      {
+        "volume": "30ml",
+        "price": 28000,
+        "in_stock": true
+      },
+      {
+        "volume": "50ml",
+        "price": 46000,
+        "in_stock": true
+      },
+      {
+        "volume": "100ml",
+        "price": 78000,
+        "in_stock": true
+      }
+    ],
+    "notes": {
+      "top": "Wild Thyme, Spiced Cardamom, Saffron Threads",
+      "heart": "Bulgarian Rose, Smoked Leather, Guaiacwood",
+      "base": "Royal Cambodian Oud, Patchouli, Dark Musk"
+    },
+    "longevity": "14+ Hours",
+    "sillage": "Monolithic & Magnetic",
+    "image": "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80",
+    "featured": true,
+    "rating": 5,
+    "reviewsCount": 42
+  },
+  {
+    "id": "as-004",
+    "name": "Vert Éternel",
+    "subtitle": "Eau Fraîche Extrême",
+    "tagline": "Vibrant, Crisp & Pure Nature.",
+    "category": "Fresh",
+    "gender": "Men",
+    "badge": "Popular",
+    "price": 29500,
+    "compareAtPrice": 35000,
+    "stock_status": "IN_STOCK",
+    "stock_quantity": 15,
+    "description": "Crisp morning dewdrops on Sicilian bergamot, crushed mint leaves, and earthy Haitian vetiver. Energizing, sharp, and immaculate.",
+    "sizes": [
+      {
+        "volume": "30ml",
+        "price": 17000,
+        "in_stock": true
+      },
+      {
+        "volume": "50ml",
+        "price": 29500,
+        "in_stock": true
+      },
+      {
+        "volume": "100ml",
+        "price": 49000,
+        "in_stock": true
+      }
+    ],
+    "notes": {
+      "top": "Sicilian Bergamot, Crushed Mint, Lime Blossom",
+      "heart": "Green Tea, Crisp Apple, Lavender Provence",
+      "base": "Haitian Vetiver, White Cedar, Clean Musk"
+    },
+    "longevity": "8+ Hours",
+    "sillage": "Fresh & Invigorating",
+    "image": "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=800&q=80",
+    "featured": true,
+    "rating": 4.7,
+    "reviewsCount": 21
+  },
+  {
+    "id": "as-005",
+    "name": "Rose Céleste",
+    "subtitle": "Eau de Parfum",
+    "tagline": "Velvet Petals & Morning Bloom.",
+    "category": "Floral",
+    "gender": "Women",
+    "badge": "New",
+    "price": 32000,
+    "compareAtPrice": 38000,
+    "stock_status": "IN_STOCK",
+    "stock_quantity": 9,
+    "description": "An ode to blooming romance. Fresh Grasse roses wrapped in velvet peony, sparkling lychee, and creamy white sandalwood.",
+    "sizes": [
+      {
+        "volume": "30ml",
+        "price": 18500,
+        "in_stock": true
+      },
+      {
+        "volume": "50ml",
+        "price": 32000,
+        "in_stock": true
+      },
+      {
+        "volume": "100ml",
+        "price": 54000,
+        "in_stock": true
+      }
+    ],
+    "notes": {
+      "top": "Sparkling Lychee, Pink Peppercorn, Dewy Pear",
+      "heart": "Grasse Centifolia Rose, Velvet Peony, Magnolia",
+      "base": "White Sandalwood, Soft Amber, Sheer Musk"
+    },
+    "longevity": "9+ Hours",
+    "sillage": "Graceful & Delicate",
+    "image": "https://images.unsplash.com/photo-1588405748480-1cf414800a2d?auto=format&fit=crop&w=800&q=80",
+    "featured": false,
+    "rating": 4.8,
+    "reviewsCount": 16
+  },
+  {
+    "id": "as-006",
+    "name": "Santal Majestueux",
+    "subtitle": "Extrait de Parfum",
+    "tagline": "Creamy Sandalwood & Rich Spices.",
+    "category": "Woody",
+    "gender": "Unisex",
+    "badge": "Low Stock",
+    "price": 41000,
+    "compareAtPrice": 48000,
+    "stock_status": "IN_STOCK",
+    "stock_quantity": 2,
+    "description": "Australian sandalwood steeped in toasted cardamom, creamy coconut milk, and smoky incense. A soothing yet deeply seductive aura.",
+    "sizes": [
+      {
+        "volume": "30ml",
+        "price": 24000,
+        "in_stock": true
+      },
+      {
+        "volume": "50ml",
+        "price": 41000,
+        "in_stock": true
+      },
+      {
+        "volume": "100ml",
+        "price": 69000,
+        "in_stock": true
+      }
+    ],
+    "notes": {
+      "top": "Toasted Cardamom, Violet Leaf, Papyrus",
+      "heart": "Creamy Coconut, Iris Root, Incense Smoke",
+      "base": "Australian Sandalwood, Cedarwood, Leather, Amber"
+    },
+    "longevity": "11+ Hours",
+    "sillage": "Rich & Creamy",
+    "image": "https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&w=800&q=80",
+    "featured": false,
+    "rating": 4.9,
+    "reviewsCount": 27,
+    "updatedAt": "2026-08-22T10:54:38.349Z"
+  },
+  {
+    "id": "as-007",
+    "name": "Soleil d'Agrumes",
+    "subtitle": "Eau de Parfum",
+    "tagline": "Sparkling Citrus & Warm Sunshine.",
+    "category": "Citrus",
+    "gender": "Unisex",
+    "badge": "",
+    "price": 27000,
+    "compareAtPrice": 32000,
+    "stock_status": "IN_STOCK",
+    "stock_quantity": 20,
+    "description": "Sunlit Amalfi coast captured in a bottle. Crisp blood orange, juicy grapefruit, and basil leaves resting over clean cedarwood.",
+    "sizes": [
+      {
+        "volume": "30ml",
+        "price": 16000,
+        "in_stock": true
+      },
+      {
+        "volume": "50ml",
+        "price": 27000,
+        "in_stock": true
+      },
+      {
+        "volume": "100ml",
+        "price": 46000,
+        "in_stock": true
+      }
+    ],
+    "notes": {
+      "top": "Amalfi Lemon, Blood Orange, Ruby Grapefruit",
+      "heart": "Wild Basil, Petitgrain, Orange Flower",
+      "base": "Virginia Cedar, Vetiver, White Amber"
+    },
+    "longevity": "7+ Hours",
+    "sillage": "Radiant & Refreshing",
+    "image": "https://images.unsplash.com/photo-1563178406-4cdc2923acbc?auto=format&fit=crop&w=800&q=80",
+    "featured": false,
+    "rating": 4.6,
+    "reviewsCount": 14
+  },
+  {
+    "id": "as-008",
+    "name": "Vanille Noire Royale",
+    "subtitle": "Extrait de Parfum",
+    "tagline": "Smoky Madagascar Vanilla & Bourbon.",
+    "category": "Amber",
+    "gender": "Unisex",
+    "badge": "Sold Out",
+    "price": 44000,
+    "compareAtPrice": 50000,
+    "stock_status": "OUT_OF_STOCK",
+    "stock_quantity": 5,
+    "description": "Dark Bourbon vanilla pods aged in oak barrels with toasted almond, rich cacao, and smoldering myrrh. Pure luxury gourmand.",
+    "sizes": [
+      {
+        "volume": "30ml",
+        "price": 26000,
+        "in_stock": false
+      },
+      {
+        "volume": "50ml",
+        "price": 44000,
+        "in_stock": false
+      },
+      {
+        "volume": "100ml",
+        "price": 74000,
+        "in_stock": false
+      }
+    ],
+    "notes": {
+      "top": "Toasted Almond, Dark Rum, Bitter Orange",
+      "heart": "Raw Cacao, Smoked Myrrh, Heliotrope",
+      "base": "Madagascar Bourbon Vanilla, Benzoin, Oak Wood"
+    },
+    "longevity": "13+ Hours",
+    "sillage": "Decadent & Intimate",
+    "image": "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=80",
+    "featured": false,
+    "rating": 4.9,
+    "reviewsCount": 35,
+    "updatedAt": "2026-08-19T23:08:19.320Z"
+  }
+]

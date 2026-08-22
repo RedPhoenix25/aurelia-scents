@@ -1,0 +1,15 @@
+{
+  "store_name": "Aurelia Scents",
+  "tagline": "Timeless Luxury, Uniquely Yours",
+  "whatsapp_number": "2347080097512",
+  "currency_symbol": "₦",
+  "currency_code": "NGN",
+  "standard_delivery_fee": 2500,
+  "free_delivery_threshold": 50000,
+  "announcement_text": "",
+  "store_location": "Lagos, Nigeria",
+  "business_email": "concierge@aureliascents.com",
+  "instagram_handle": "aurelia_scents",
+  "admin_username": "royal",
+  "admin_password": "royal123"
+}

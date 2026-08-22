@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Aurelia Scents | Timeless Luxury Fragrances</title>
+  <meta name="description" content="Discover artisan fragrances crafted with rare ingredients and timeless sophistication. Shop Aurelia Scents — luxury perfumery from Lagos, Nigeria.">
+  <meta name="theme-color" content="#0a0908">
+  
+  <!-- Open Graph / WhatsApp Preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Aurelia Scents | Haute Parfumerie">
+  <meta property="og:description" content="Artisan fragrances crafted with rare botanical extracts, smoked oud, and timeless elegance. Lagos, Nigeria.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=1200&q=85">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9a84c'%3E%3Cpolygon points='6 3 18 3 22 9 12 22 2 9'/%3E%3C/svg%3E">
+
+  <!-- Schema.org JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "OnlineStore",
+    "name": "Aurelia Scents",
+    "description": "Artisan luxury Haute Parfumerie based in Lagos, Nigeria.",
+    "url": "http://localhost:3000",
+    "logo": "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=600&q=80",
+    "currenciesAccepted": "NGN",
+    "paymentAccepted": "Cash on Delivery, Bank Transfer, Direct WhatsApp Concierge",
+    "priceRange": "₦15,000 - ₦150,000",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Lagos",
+      "addressCountry": "NG"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+2347080097512",
+      "contactType": "Customer Concierge",
+      "availableLanguage": ["English"]
+    }
+  }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="css/style.css?v=3">
+</head>
+<body>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <i data-lucide="check"></i>
+    <span id="toast-text">Added to bag</span>
+  </div>
+
+  <div class="site-wrap">
+
+    <!-- ── ANNOUNCEMENT BAR ─────────────────────────────── -->
+    <div class="announcement-bar" id="announcement-bar" style="display:none;">
+      <i data-lucide="sparkle" style="width:13px;height:13px;"></i>
+      <span id="announcement-text"></span>
+    </div>
+
+    <!-- ── HEADER ───────────────────────────────────────── -->
+    <header class="site-header">
+      <div class="header-inner">
+
+        <!-- Brand -->
+        <a href="#" class="brand" id="home-link">
+          <span class="brand-name">Aurelia Scents</span>
+          <span class="brand-tagline">Haute Parfumerie</span>
+        </a>
+
+        <!-- Desktop nav (hidden on mobile) -->
+        <nav class="desktop-nav" aria-label="Primary navigation">
+          <a href="#shop">Shop</a>
+          <a href="#collections">Collections</a>
+          <a href="#" id="link-nav-track">Track Order</a>
+          <a href="#" id="link-nav-concierge">Concierge</a>
+        </nav>
+
+        <!-- Icon actions -->
+        <div class="header-actions">
+          <button class="icon-btn" id="btn-track" aria-label="Track Order" title="Track Order">
+            <i data-lucide="package"></i>
+          </button>
+          <button class="icon-btn" id="btn-search" aria-label="Search">
+            <i data-lucide="search"></i>
+          </button>
+          <button class="icon-btn" id="btn-bag" aria-label="Shopping bag">
+            <i data-lucide="shopping-bag"></i>
+            <span class="bag-count" id="header-bag-count" style="display:none;">0</span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- ── MAIN ─────────────────────────────────────────── -->
+    <main class="page-content">
+
+      <!-- ══════════════════════════════════════════════════
+           HERO — CINEMATIC, FULL-BLEED
+           Inspired by perfume inspo.webp
+           ══════════════════════════════════════════════════ -->
+      <section class="hero" id="hero">
+
+        <!-- Right column: atmospheric bottle image -->
+        <div class="hero-visual">
+          <img
+            src="images/hero_perfume.jpg?v=3"
+            alt="Aurelia Scents signature fragrance"
+            class="hero-img"
+            id="hero-img"
+            loading="eager"
+          >
+        </div>
+
+        <!-- Left column: editorial text -->
+        <div class="hero-body">
+          <p class="hero-eyebrow">Beyond Scent, An Experience</p>
+          <h1 class="hero-headline">Timeless Luxury,<br>Uniquely <em>Yours</em></h1>
+          <p class="hero-sub">Luxury hand-blended perfumes, designed to captivate from the very first spritz</p>
+
+          <!-- CTAs -->
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px;">
+            <button class="btn-ghost" id="btn-hero-discover" style="width:auto; padding:12px 28px;">
+              Discover Collection
+            </button>
+            <button class="btn-whatsapp" id="btn-hero-concierge" style="width:auto; padding:12px 20px;">
+              <i data-lucide="message-circle" style="width:15px;height:15px;"></i>
+              Concierge
+            </button>
+          </div>
+
+          <!-- Scent family pills -->
+          <div class="hero-pills">
+            <button class="hero-pill active" data-filter="All">All</button>
+            <button class="hero-pill" data-filter="Oud">Oud</button>
+            <button class="hero-pill" data-filter="Woody">Woody</button>
+            <button class="hero-pill" data-filter="Amber">Amber</button>
+            <button class="hero-pill" data-filter="Floral">Floral</button>
+            <button class="hero-pill" data-filter="Fresh">Fresh</button>
+            <button class="hero-pill" data-filter="Citrus">Citrus</button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════════════════════════
+           CURATED COLLECTIONS
+           ══════════════════════════════════════════════════ -->
+      <section id="collections">
+        <div class="section-wrap" style="padding-bottom:0;">
+          <p class="eyebrow">Maison Aurelia</p>
+          <h2 class="section-title">Curated <em>Collections</em></h2>
+        </div>
+
+        <div class="section-wrap" style="padding-top:0;">
+          <div class="collections-scroll">
+            <div class="coll-card" data-category="Oud">
+              <img src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=400&q=80" alt="Oud Royale" class="coll-img">
+              <div class="coll-name">Oud Royale</div>
+              <div class="coll-desc">Deep & Mysterious</div>
+            </div>
+            <div class="coll-card" data-category="Amber">
+              <img src="https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=400&q=80" alt="Lumière Dorée" class="coll-img">
+              <div class="coll-name">Lumière Dorée</div>
+              <div class="coll-desc">Solar & Radiant</div>
+            </div>
+            <div class="coll-card" data-category="Woody">
+              <img src="https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&w=400&q=80" alt="Woody Essence" class="coll-img">
+              <div class="coll-name">Woody Aura</div>
+              <div class="coll-desc">Sandalwood & Cedar</div>
+            </div>
+            <div class="coll-card" data-category="Fresh">
+              <img src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=400&q=80" alt="Fresh Botanicals" class="coll-img">
+              <div class="coll-name">Fresh Botanicals</div>
+              <div class="coll-desc">Crisp & Invigorating</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════
+           SHOP / CATALOG
+           ══════════════════════════════════════════════════ -->
+      <section id="shop">
+
+        <!-- Filter strip -->
+        <nav class="filter-strip" id="filter-strip" aria-label="Filter fragrances">
+          <button class="filter-btn active" data-cat="All">All</button>
+          <button class="filter-btn" data-cat="Bestseller">Bestsellers</button>
+          <button class="filter-btn" data-cat="Oud">Oud</button>
+          <button class="filter-btn" data-cat="Woody">Woody</button>
+          <button class="filter-btn" data-cat="Amber">Amber</button>
+          <button class="filter-btn" data-cat="Floral">Floral</button>
+          <button class="filter-btn" data-cat="Fresh">Fresh</button>
+          <button class="filter-btn" data-cat="Citrus">Citrus</button>
+        </nav>
+
+        <div class="section-wrap">
+          <div class="catalog-header">
+            <div>
+              <p class="eyebrow">The Catalog</p>
+              <h2 class="section-title">Crafted Fragrances</h2>
+            </div>
+            <span class="catalog-count" id="catalog-count">8 scents</span>
+          </div>
+
+          <!-- Product grid (injected by app.js) -->
+          <div class="product-grid" id="product-grid"></div>
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════════════════════════
+           TRUST STRIP
+           ══════════════════════════════════════════════════ -->
+      <div class="trust-strip">
+        <div class="trust-item">
+          <i data-lucide="shield-check" style="color:var(--gold);"></i>
+          <span class="trust-label">100% Authentic</span>
+        </div>
+        <div class="trust-item">
+          <i data-lucide="truck" style="color:var(--gold);"></i>
+          <span class="trust-label">Nationwide Delivery</span>
+        </div>
+        <div class="trust-item">
+          <i data-lucide="message-circle" style="color:var(--gold);"></i>
+          <span class="trust-label">WhatsApp Concierge</span>
+        </div>
+        <div class="trust-item">
+          <i data-lucide="clock" style="color:var(--gold);"></i>
+          <span class="trust-label">12+ Hour Longevity</span>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════
+           FOOTER
+           ══════════════════════════════════════════════════ -->
+      <footer class="site-footer">
+        <div class="footer-brand">Aurelia Scents</div>
+        <p class="footer-sub">Artisan Haute Parfumerie · Lagos, Nigeria</p>
+        <div class="footer-links">
+          <button class="icon-btn" id="btn-footer-whatsapp" aria-label="WhatsApp Concierge" style="color:#25D366;">
+            <i data-lucide="message-circle"></i>
+          </button>
+          <button class="icon-btn" id="btn-footer-call" aria-label="Call Concierge" style="color:var(--text-secondary);">
+            <i data-lucide="phone"></i>
+          </button>
+        </div>
+        <p class="footer-copy">&copy; <span id="year">2026</span> Aurelia Scents. All rights reserved.</p>
+      </footer>
+
+    </main>
+
+    <!-- Floating Back to Top Button -->
+    <button class="floating-back-to-top" id="btn-back-to-top" aria-label="Back to top" title="Back to top">
+      <i data-lucide="arrow-up" style="width:18px;height:18px;"></i>
+    </button>
+
+    <!-- ── MOBILE BOTTOM NAV ─────────────────────────────── -->
+    <nav class="bottom-nav" aria-label="Mobile navigation">
+      <button class="nav-item active" id="nav-home" aria-label="Home">
+        <i data-lucide="home"></i>
+        <span>Home</span>
+      </button>
+      <button class="nav-item" id="nav-shop" aria-label="Shop">
+        <i data-lucide="gem"></i>
+        <span>Shop</span>
+      </button>
+      <button class="nav-item" id="nav-search" aria-label="Search">
+        <i data-lucide="search"></i>
+        <span>Search</span>
+      </button>
+      <button class="nav-item" id="nav-bag" aria-label="Bag">
+        <i data-lucide="shopping-bag"></i>
+        <span>Bag</span>
+        <span class="nav-badge" id="nav-bag-count" style="display:none;">0</span>
+      </button>
+    </nav>
+
+  </div><!-- /site-wrap -->
+
+  <!-- ══════════════════════════════════════════════════════
+       MODALS & SHEETS
+       ══════════════════════════════════════════════════════ -->
+  <div class="backdrop" id="backdrop"></div>
+
+  <!-- 1. Product Detail Sheet -->
+  <div class="sheet" id="product-sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-product-name">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title" id="sheet-product-name">Fragrance</span>
+      <button class="sheet-close" id="close-product-sheet" aria-label="Close"><i data-lucide="x"></i></button>
+    </div>
+    <div class="sheet-body" id="product-sheet-body"></div>
+    <div class="sheet-footer" id="product-sheet-footer"></div>
+  </div>
+
+  <!-- 2. Cart / Bag Sheet -->
+  <div class="sheet" id="bag-sheet" role="dialog" aria-modal="true" aria-labelledby="bag-sheet-title">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title" id="bag-sheet-title">Your Bag (<span id="bag-item-count">0</span>)</span>
+      <button class="sheet-close" id="close-bag-sheet" aria-label="Close"><i data-lucide="x"></i></button>
+    </div>
+    <div class="sheet-body" id="bag-body"></div>
+    <div class="sheet-footer" id="bag-footer">
+      <div class="cart-totals" id="cart-totals"></div>
+      <div class="cta-stack">
+        <button class="btn-primary" id="btn-checkout">Proceed to Checkout</button>
+        <button class="btn-whatsapp" id="btn-wa-cart">
+          <i data-lucide="message-circle" style="width:15px;height:15px;"></i>
+          Order via WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Search Sheet -->
+  <div class="sheet" id="search-sheet" role="dialog" aria-modal="true" aria-labelledby="search-sheet-title">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title" id="search-sheet-title">Search Atelier</span>
+      <button class="sheet-close" id="close-search-sheet" aria-label="Close"><i data-lucide="x"></i></button>
+    </div>
+    <div class="sheet-body">
+      <div class="search-input-wrap" style="margin-bottom:10px;">
+        <i data-lucide="search" class="search-input-icon" style="width:16px;height:16px;"></i>
+        <input type="text" class="search-input" id="search-input" placeholder="Fragrance name, scent character…" autocomplete="off">
+      </div>
+      <div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.06);">
+        <button type="button" class="hero-pill" onclick="quickSearchTag('Bestseller')">Bestsellers</button>
+        <button type="button" class="hero-pill" onclick="quickSearchTag('Oud')">Oud</button>
+        <button type="button" class="hero-pill" onclick="quickSearchTag('Woody')">Woody</button>
+        <button type="button" class="hero-pill" onclick="quickSearchTag('Amber')">Amber</button>
+        <button type="button" class="hero-pill" onclick="quickSearchTag('Fresh')">Fresh</button>
+      </div>
+      <div id="search-results"></div>
+    </div>
+  </div>
+
+  <!-- 4. Checkout Sheet -->
+  <div class="sheet" id="checkout-sheet" role="dialog" aria-modal="true" aria-labelledby="checkout-sheet-title">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title" id="checkout-sheet-title">Delivery Details</span>
+      <button class="sheet-close" id="close-checkout-sheet" aria-label="Close"><i data-lucide="x"></i></button>
+    </div>
+    <div class="sheet-body">
+      <form id="checkout-form" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="cust-name">Full Name *</label>
+          <input class="form-input" type="text" id="cust-name" required placeholder="e.g. Amaka Eze">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cust-phone">Phone Number *</label>
+          <input class="form-input" type="tel" id="cust-phone" required placeholder="08012345678">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cust-whatsapp">WhatsApp Number</label>
+          <input class="form-input" type="tel" id="cust-whatsapp" placeholder="Same as phone or different">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cust-address">Delivery Address *</label>
+          <input class="form-input" type="text" id="cust-address" required placeholder="Street, estate or landmark">
+        </div>
+        <div class="form-row form-group">
+          <div>
+            <label class="form-label" for="cust-city">City / Area *</label>
+            <input class="form-input" type="text" id="cust-city" required placeholder="e.g. Lekki Phase 1">
+          </div>
+          <div>
+            <label class="form-label" for="cust-state">State *</label>
+            <select class="form-select" id="cust-state" required>
+              <option value="Lagos">Lagos</option>
+              <option value="Abuja FCT">Abuja FCT</option>
+              <option value="Rivers">Rivers</option>
+              <option value="Oyo">Oyo</option>
+              <option value="Enugu">Enugu</option>
+              <option value="Delta">Delta</option>
+              <option value="Ogun">Ogun</option>
+              <option value="Kaduna">Kaduna</option>
+              <option value="Edo">Edo</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Payment Method</label>
+          <label class="payment-option">
+            <input type="radio" name="payment" value="pay_on_delivery" checked>
+            <span class="payment-option-label">Pay on Delivery / Bank Transfer (Lagos & select cities)</span>
+          </label>
+          <label class="payment-option">
+            <input type="radio" name="payment" value="whatsapp_sync">
+            <span class="payment-option-label">Send order directly to WhatsApp Concierge</span>
+          </label>
+        </div>
+      </form>
+    </div>
+    <div class="sheet-footer">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;">
+        <span style="font-size:12px;color:var(--text-muted);">Amount Payable</span>
+        <span id="checkout-total" style="font-size:18px;font-weight:700;color:var(--text-gold);">₦0</span>
+      </div>
+      <button class="btn-primary" id="btn-place-order">Confirm &amp; Place Order</button>
+    </div>
+  </div>
+
+  <!-- 5. Order Confirmation Sheet -->
+  <div class="sheet" id="confirm-sheet" role="dialog" aria-modal="true">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title" style="color:var(--text-gold);">Order Confirmed</span>
+      <button class="sheet-close" id="close-confirm-sheet" aria-label="Close"><i data-lucide="x"></i></button>
+    </div>
+    <div class="sheet-body" id="confirm-body"></div>
+    <div class="sheet-footer" id="confirm-footer"></div>
+  </div>
+
+  <!-- 6. Order Tracking Sheet -->
+  <div class="sheet" id="track-sheet" role="dialog" aria-modal="true" aria-labelledby="track-sheet-title">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+      <span class="sheet-title" id="track-sheet-title">Track Delivery</span>
+      <button class="sheet-close" id="close-track-sheet" aria-label="Close"><i data-lucide="x"></i></button>
+    </div>
+    <div class="sheet-body" style="padding-bottom:24px;">
+      <div style="margin-bottom:16px;">
+        <div style="display:flex;gap:8px;align-items:stretch;margin-bottom:6px;">
+          <input type="text" id="track-input" class="form-input" placeholder="e.g. AS-ORD-5647 or Phone" style="flex:1;min-width:0;height:44px;font-size:13px;">
+          <button type="button" class="btn-primary" id="btn-submit-track" style="width:auto;flex-shrink:0;padding:0 20px;height:44px;white-space:nowrap;letter-spacing:1px;">
+            Track
+          </button>
+        </div>
+      </div>
+      <div id="track-result-container">
+        <div style="text-align:center;padding:36px 12px;color:var(--text-muted);font-size:12px;">
+          <i data-lucide="package-search" style="width:34px;height:34px;margin-bottom:10px;color:var(--gold-border);"></i>
+          <p style="color:var(--text-secondary);font-size:13px;margin-bottom:4px;">Real-Time Concierge Tracking</p>
+          <p style="font-size:11.5px;color:var(--text-muted);">Enter your order ID or phone number to view fulfillment &amp; dispatch status.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/whatsapp.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const yr = document.getElementById('year');
+      if (yr) yr.textContent = new Date().getFullYear();
+      if (window.lucide) lucide.createIcons();
+
+      // Service Worker Registration for PWA / Instant Caching
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js').catch(err => {
+          console.warn('SW registration:', err);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

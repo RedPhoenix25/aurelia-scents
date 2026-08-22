@@ -1,0 +1,194 @@
+[
+  {
+    "id": "AS-ORD-6101",
+    "customer": {
+      "name": "Martins Oluwatimilehin Enoch",
+      "phone": "08109825703",
+      "whatsapp": "08109825703",
+      "address": "Adeola",
+      "city": "Lagos",
+      "state": "Lagos",
+      "notes": ""
+    },
+    "items": [
+      {
+        "productId": "as-006",
+        "name": "Santal Majestueux",
+        "size": "30ml",
+        "price": 24000,
+        "quantity": 1,
+        "image": "https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&w=800&q=80"
+      }
+    ],
+    "subtotal": 24000,
+    "deliveryFee": 2500,
+    "total": 26500,
+    "paymentMethod": "whatsapp_sync",
+    "channel": "whatsapp",
+    "status": "Shipped",
+    "createdAt": "2026-08-22T11:58:09.581Z",
+    "updatedAt": "2026-08-22T12:10:56.703Z"
+  },
+  {
+    "id": "AS-ORD-5647",
+    "customer": {
+      "name": "John Doe",
+      "phone": "08012345678",
+      "whatsapp": "08012345678",
+      "address": "123 Luxury Way",
+      "city": "Lekki Phase 1",
+      "state": "Lagos",
+      "notes": ""
+    },
+    "items": [
+      {
+        "productId": "as-001",
+        "name": "Éclat Noir",
+        "size": "50ml",
+        "price": 38000,
+        "quantity": 1,
+        "image": "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80"
+      }
+    ],
+    "subtotal": 38000,
+    "deliveryFee": 2500,
+    "total": 40500,
+    "paymentMethod": "pay_on_delivery",
+    "channel": "website",
+    "status": "Delivered",
+    "createdAt": "2026-08-22T09:51:49.509Z",
+    "updatedAt": "2026-08-22T09:58:31.993Z"
+  },
+  {
+    "id": "AS-ORD-5093",
+    "customer": {
+      "name": "Martins Oluwatimilehin Enoch",
+      "phone": "08109825703",
+      "whatsapp": "08109825703",
+      "address": "Adeola",
+      "city": "Lagos",
+      "state": "Lagos",
+      "notes": ""
+    },
+    "items": [
+      {
+        "productId": "as-001",
+        "name": "Éclat Noir",
+        "size": "50ml",
+        "price": 38000,
+        "quantity": 1,
+        "image": "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        "productId": "as-002",
+        "name": "Lumière Dorée",
+        "size": "50ml",
+        "price": 34000,
+        "quantity": 1,
+        "image": "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=800&q=80"
+      }
+    ],
+    "subtotal": 72000,
+    "deliveryFee": 0,
+    "total": 72000,
+    "paymentMethod": "pay_on_delivery",
+    "channel": "website",
+    "status": "Pending",
+    "createdAt": "2026-08-22T09:45:46.178Z"
+  },
+  {
+    "id": "AS-ORD-7080",
+    "customer": {
+      "name": "Subagent Test",
+      "phone": "08012345678",
+      "whatsapp": "08012345678",
+      "address": "123 Luxury Lane",
+      "city": "Lekki",
+      "state": "Lagos",
+      "notes": ""
+    },
+    "items": [
+      {
+        "productId": "as-001",
+        "name": "Éclat Noir",
+        "size": "100ml",
+        "price": 65000,
+        "quantity": 2,
+        "image": "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80"
+      }
+    ],
+    "subtotal": 130000,
+    "deliveryFee": 0,
+    "total": 130000,
+    "paymentMethod": "pay_on_delivery",
+    "channel": "website",
+    "status": "Pending",
+    "createdAt": "2026-08-19T23:04:03.951Z"
+  },
+  {
+    "id": "AS-ORD-4081",
+    "customer": {
+      "name": "Chioma Adebayo",
+      "phone": "+2348098765432",
+      "whatsapp": "+2348098765432",
+      "address": "5 Victoria Island",
+      "city": "Lagos",
+      "state": "Lagos",
+      "notes": ""
+    },
+    "items": [
+      {
+        "productId": "as-001",
+        "name": "Éclat Noir",
+        "size": "50ml",
+        "price": 38000,
+        "quantity": 1,
+        "image": ""
+      }
+    ],
+    "subtotal": 38000,
+    "deliveryFee": 2500,
+    "total": 40500,
+    "paymentMethod": "pay_on_delivery",
+    "channel": "website",
+    "status": "Pending",
+    "createdAt": "2026-08-19T22:41:13.203Z"
+  },
+  {
+    "id": "AS-ORD-1001",
+    "customer": {
+      "name": "Amaka Eze",
+      "phone": "+2348031234567",
+      "whatsapp": "+2348031234567",
+      "address": "14 Admiralty Way, Lekki Phase 1",
+      "city": "Lagos",
+      "state": "Lagos",
+      "notes": "Please call before arrival"
+    },
+    "items": [
+      {
+        "productId": "as-001",
+        "name": "Éclat Noir",
+        "size": "50ml",
+        "price": 38000,
+        "quantity": 1,
+        "image": "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        "productId": "as-002",
+        "name": "Lumière Dorée",
+        "size": "30ml",
+        "price": 19500,
+        "quantity": 1,
+        "image": "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=800&q=80"
+      }
+    ],
+    "subtotal": 57500,
+    "deliveryFee": 0,
+    "total": 57500,
+    "paymentMethod": "pay_on_delivery",
+    "channel": "website",
+    "status": "Processing",
+    "createdAt": "2026-08-19T20:15:00.000Z"
+  }
+]

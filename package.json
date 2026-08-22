@@ -1,0 +1,24 @@
+{
+  "name": "aurelia-scents",
+  "version": "1.0.0",
+  "description": "Mobile-First Luxury E-Commerce & Lightweight Admin Backend for Aurelia Scents",
+  "main": "server/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  },
+  "keywords": [
+    "ecommerce",
+    "luxury",
+    "perfume",
+    "mobile-first",
+    "whatsapp"
+  ],
+  "author": "Aurelia Scents",
+  "license": "ISC"
+}
