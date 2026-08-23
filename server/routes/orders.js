@@ -163,4 +163,19 @@ router.patch('/:id/status', (req, res) => {
   res.json({ success: true, order: orders[index] });
 });
 
+// DELETE single order (Admin only)
+router.delete('/:id', (req, res) => {
+  const orders = readData(ORDERS_FILE);
+  const index  = orders.findIndex(o => o.id === req.params.id);
+
+  if (index === -1) {
+    return res.status(404).json({ success: false, error: 'Order not found' });
+  }
+
+  orders.splice(index, 1);
+  writeData(ORDERS_FILE, orders);
+
+  res.json({ success: true, message: 'Order deleted successfully' });
+});
+
 export default router;

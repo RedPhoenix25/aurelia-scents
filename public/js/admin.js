@@ -388,9 +388,14 @@ function renderOrdersList(orders) {
               ${statusOptions}
             </select>
           </div>
-          <button type="button" class="btn-whatsapp" style="padding:7px 14px;" onclick="notifyCustomerWhatsApp('${order.id}')">
-            <i data-lucide="message-circle" style="width:13px;height:13px;"></i> WhatsApp Update
-          </button>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button type="button" class="btn-whatsapp" style="padding:7px 14px;" onclick="notifyCustomerWhatsApp('${order.id}')">
+              <i data-lucide="message-circle" style="width:13px;height:13px;"></i> WhatsApp Update
+            </button>
+            <button type="button" class="btn-danger" style="padding:7px 12px;font-size:10px;" onclick="deleteOrder('${order.id}')">
+              <i data-lucide="trash-2" style="width:13px;height:13px;"></i> Delete
+            </button>
+          </div>
         </div>
 
       </div>`;
@@ -478,6 +483,73 @@ window.updateOrderStatus = async function(orderId, newStatus) {
       adminToast(`Order status updated to ${newStatus}`, 'success');
     }
   } catch (e) { adminToast('Failed to update order status.', 'error'); }
+};
+
+// ── DELETE ORDER ──────────────────────────────────────────────────────────────
+window.deleteOrder = async function(orderId) {
+  const confirmed = await adminConfirm(
+    'Delete Order',
+    `Permanently delete order #${orderId}? This cannot be undone and will not restore stock.`,
+    'Delete'
+  );
+  if (!confirmed) return;
+
+  try {
+    const res  = await fetch(`/api/orders/${orderId}`, { method: 'DELETE' });
+    const data = await res.json();
+    if (data.success) {
+      await fetchOrders();
+      await fetchStats();
+      adminToast(`Order #${orderId} deleted.`, 'warn');
+    } else {
+      adminToast(data.error || 'Failed to delete order.', 'error');
+    }
+  } catch (e) { adminToast('Server error while deleting order.', 'error'); }
+};
+
+// ── EXPORT ORDERS TO CSV ──────────────────────────────────────────────────────
+window.exportOrdersCSV = function() {
+  const orders = adminState.orders;
+  if (!orders.length) {
+    adminToast('No orders to export.', 'warn');
+    return;
+  }
+
+  const headers = ['Order ID','Date','Customer Name','Phone','Address','City','State','Items','Subtotal (₦)','Delivery Fee (₦)','Total (₦)','Payment Method','Status'];
+
+  const escape = val => {
+    const str = String(val ?? '');
+    return str.includes(',') || str.includes('"') || str.includes('\n')
+      ? `"${str.replace(/"/g, '""')}"`
+      : str;
+  };
+
+  const rows = orders.map(o => [
+    o.id,
+    o.createdAt ? new Date(o.createdAt).toLocaleDateString('en-GB') : '',
+    o.customer?.name || '',
+    o.customer?.phone || '',
+    o.customer?.address || '',
+    o.customer?.city || '',
+    o.customer?.state || '',
+    (o.items || []).map(i => `${i.name} (${i.size||'50ml'}) x${i.quantity}`).join(' | '),
+    o.subtotal ?? '',
+    o.deliveryFee ?? '',
+    o.total ?? '',
+    o.paymentMethod || '',
+    o.status || ''
+  ].map(escape).join(','));
+
+  const csv  = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  const date = new Date().toISOString().slice(0,10);
+  link.href     = url;
+  link.download = `aurelia-orders-${date}.csv`;
+  link.click();
+  URL.revokeObjectURL(url);
+  adminToast(`Exported ${orders.length} order${orders.length !== 1 ? 's' : ''} to CSV.`, 'success');
 };
 
 // ── SIZE VARIANTS MANAGER ───────────────────────────────────────────────────
