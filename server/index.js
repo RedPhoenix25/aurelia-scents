@@ -7,6 +7,7 @@ import productsRouter from './routes/products.js';
 import ordersRouter from './routes/orders.js';
 import settingsRouter from './routes/settings.js';
 import adminRouter from './routes/admin.js';
+import collectionsRouter from './routes/collections.js';
 
 import fs from 'fs';
 
@@ -67,6 +68,7 @@ app.use('/api/products', productsRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/settings', settingsRouter);
 app.use('/api/admin', adminRouter);
+app.use('/api/collections', collectionsRouter);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

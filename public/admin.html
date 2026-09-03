@@ -91,6 +91,9 @@
       <button class="mobile-tab-btn" data-tab="tab-products">
         <i data-lucide="package"></i> Products
       </button>
+      <button class="mobile-tab-btn" data-tab="tab-collections">
+        <i data-lucide="layers"></i> Collections
+      </button>
       <button class="mobile-tab-btn" data-tab="tab-orders">
         <i data-lucide="shopping-cart"></i> Orders
       </button>
@@ -109,6 +112,9 @@
       <div class="sidebar-label">Store</div>
       <button class="sidebar-nav-item" data-tab="tab-products">
         <i data-lucide="package"></i> Products &amp; Stock
+      </button>
+      <button class="sidebar-nav-item" data-tab="tab-collections">
+        <i data-lucide="layers"></i> Collections
       </button>
       <button class="sidebar-nav-item" data-tab="tab-orders">
         <i data-lucide="shopping-cart"></i> Customer Orders
@@ -194,6 +200,24 @@
         </div>
 
         <div class="admin-list" id="admin-products-list"></div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════════════════════
+           TAB: COLLECTIONS
+           ══════════════════════════════════════════════════════════════ -->
+      <section id="tab-collections" class="tab-content">
+
+        <div class="section-hd">
+          <div>
+            <div class="section-hd-title">Curated Collections</div>
+            <div class="section-hd-sub">Manage the collection cards shown on the storefront homepage</div>
+          </div>
+          <button class="btn-primary" id="btn-open-add-collection">
+            <i data-lucide="plus"></i> Add Collection
+          </button>
+        </div>
+
+        <div class="admin-list" id="admin-collections-list"></div>
       </section>
 
       <!-- ══════════════════════════════════════════════════════════════
@@ -372,6 +396,76 @@
 
         <button type="submit" class="btn-primary" style="width:100%;margin-top:8px;">
           <i data-lucide="check"></i> Save Fragrance
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       COLLECTION ADD / EDIT MODAL
+       ════════════════════════════════════════════════════════════════ -->
+  <div class="admin-modal" id="collection-form-modal">
+    <div class="admin-modal-box">
+      <div class="modal-hd">
+        <h2 class="modal-title" id="collection-modal-heading">Add Collection</h2>
+        <button class="btn-icon" id="btn-close-collection-modal" aria-label="Close">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+
+      <form id="collection-edit-form" style="display:flex;flex-direction:column;gap:10px;">
+        <input type="hidden" id="form-coll-id">
+
+        <div class="form-group">
+          <label class="form-label" for="form-coll-name">Collection Name *</label>
+          <input type="text" id="form-coll-name" class="form-input" required placeholder="e.g. Oud Royale">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="form-coll-desc">Tagline / Description</label>
+          <input type="text" id="form-coll-desc" class="form-input" placeholder="e.g. Deep & Mysterious">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="form-coll-category">Linked Product Category *</label>
+          <select id="form-coll-category" class="form-select">
+            <option value="Oud">Oud</option>
+            <option value="Woody">Woody</option>
+            <option value="Amber">Amber</option>
+            <option value="Floral">Floral</option>
+            <option value="Fresh">Fresh</option>
+            <option value="Citrus">Citrus</option>
+            <option value="Bestseller">Bestseller</option>
+          </select>
+        </div>
+
+        <!-- Device Image Upload -->
+        <div class="form-group">
+          <label class="form-label">Collection Image *</label>
+          <input type="file" id="form-coll-file" accept="image/png, image/jpeg, image/webp" style="display:none;">
+          <input type="hidden" id="form-coll-image-value">
+
+          <div class="upload-dropzone" id="coll-upload-dropzone">
+            <div class="upload-icon-wrap">
+              <i data-lucide="upload-cloud" style="width:20px;height:20px;"></i>
+            </div>
+            <div class="upload-text-main">Tap to select photo from your device</div>
+            <div class="upload-text-sub">Supports PNG, JPG, or WEBP (Up to 15MB)</div>
+          </div>
+
+          <div class="upload-preview-container" id="coll-upload-preview-container">
+            <img src="" alt="Collection preview" id="coll-upload-preview-img" class="upload-preview-img">
+            <div class="upload-preview-bar">
+              <span style="font-size:11px;color:#fff;font-weight:500;" id="coll-upload-filename-text">Photo selected</span>
+              <button type="button" class="btn-danger" id="btn-coll-change-image" style="padding:4px 10px;font-size:10px;">
+                <i data-lucide="trash-2" style="width:12px;height:12px;"></i> Change
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width:100%;margin-top:8px;">
+          <i data-lucide="check"></i> Save Collection
         </button>
       </form>
     </div>

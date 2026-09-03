@@ -20,7 +20,7 @@ const state = {
 // ── INIT ────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   await fetchSettings();
-  await fetchProducts();
+  await Promise.all([fetchProducts(), fetchCollections()]);
   setupEventListeners();
   renderCart();
   updateCartBadge();
@@ -86,6 +86,45 @@ async function fetchProducts() {
       filterProducts();
     }
   } catch (e) { console.error('Products error:', e); }
+}
+
+// ── COLLECTIONS ─────────────────────────────────────────────────────────────
+async function fetchCollections() {
+  try {
+    const res = await fetch('/api/collections');
+    const d   = await res.json();
+    if (d.success) {
+      renderCollections(d.collections || []);
+    }
+  } catch (e) { console.warn('Collections fallback:', e); }
+}
+
+function renderCollections(collections) {
+  const container = document.getElementById('collections-scroll');
+  if (!container) return;
+
+  if (!collections.length) {
+    container.innerHTML = '';
+    return;
+  }
+
+  container.innerHTML = collections.map(c => `
+    <div class="coll-card" data-category="${c.category}">
+      <img src="${c.image}" alt="${c.name}" class="coll-img" loading="lazy">
+      <div class="coll-name">${c.name}</div>
+      <div class="coll-desc">${c.description || ''}</div>
+    </div>
+  `).join('');
+
+  // Attach click listeners
+  container.querySelectorAll('.coll-card').forEach(card => {
+    card.addEventListener('click', () => {
+      filterProducts(card.dataset.category);
+      document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  reIcons();
 }
 
 // ── FILTER ──────────────────────────────────────────────────────────────────
@@ -807,13 +846,7 @@ function setupEventListeners() {
     });
   });
 
-  // Collection cards
-  document.querySelectorAll('.coll-card').forEach(card => {
-    card.addEventListener('click', () => {
-      filterProducts(card.dataset.category);
-      document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' });
-    });
-  });
+  // Collection cards — listeners are attached dynamically in renderCollections()
 
   // Search input
   document.getElementById('search-input')?.addEventListener('input', e => {

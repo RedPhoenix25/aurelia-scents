@@ -7,6 +7,7 @@
 const adminState = {
   products: [],
   orders:   [],
+  collections: [],
   stats:    {},
   settings: {},
   activeTab: 'tab-dashboard'
@@ -132,7 +133,7 @@ function handleLogout() {
 
 // ── DATA LOADING ─────────────────────────────────────────────────────────────
 async function loadAdminData() {
-  await Promise.all([fetchStats(), fetchProducts(), fetchOrders(), fetchSettings()]);
+  await Promise.all([fetchStats(), fetchProducts(), fetchOrders(), fetchSettings(), fetchCollections()]);
   if (window.lucide) lucide.createIcons();
 }
 
@@ -813,6 +814,268 @@ async function handleSettingsSubmit(e) {
   }
 }
 
+// ── COLLECTIONS ──────────────────────────────────────────────────────────────
+let collUploadedBase64 = null;
+
+async function fetchCollections() {
+  try {
+    const res  = await fetch('/api/collections');
+    const data = await res.json();
+    if (data.success) {
+      adminState.collections = data.collections || [];
+      renderCollectionsList();
+    }
+  } catch (e) { console.error('Collections:', e); }
+}
+
+function renderCollectionsList() {
+  const container = document.getElementById('admin-collections-list');
+  if (!container) return;
+  const collections = adminState.collections;
+
+  if (!collections.length) {
+    container.innerHTML = `
+      <div class="empty-state">
+        <i data-lucide="layers" style="width:36px;height:36px;color:var(--gold-border);margin-bottom:10px;"></i>
+        <div class="empty-state-title">No collections yet</div>
+        <p style="font-size:12px;">Add your first curated collection with the button above.</p>
+      </div>`;
+    if (window.lucide) lucide.createIcons();
+    return;
+  }
+
+  container.innerHTML = collections.map((c, idx) => `
+    <div class="admin-item-card">
+      <div class="coll-admin-card">
+        <img src="${c.image || ''}" alt="${c.name}" class="coll-admin-img" loading="lazy">
+        <div class="coll-admin-info">
+          <div class="coll-admin-name">${c.name}</div>
+          <div class="coll-admin-desc">${c.description || ''}</div>
+          <span class="coll-admin-cat">
+            <i data-lucide="tag" style="width:10px;height:10px;"></i> ${c.category}
+          </span>
+        </div>
+      </div>
+
+      <div class="coll-admin-actions">
+        <div class="coll-reorder-group">
+          <button class="coll-reorder-btn" title="Move up" onclick="moveCollection(${idx}, -1)" ${idx === 0 ? 'disabled' : ''}>
+            <i data-lucide="chevron-up" style="width:14px;height:14px;"></i>
+          </button>
+          <span class="coll-order-badge">${idx + 1} / ${collections.length}</span>
+          <button class="coll-reorder-btn" title="Move down" onclick="moveCollection(${idx}, 1)" ${idx === collections.length - 1 ? 'disabled' : ''}>
+            <i data-lucide="chevron-down" style="width:14px;height:14px;"></i>
+          </button>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn-ghost" style="font-size:10px;padding:6px 12px;" onclick="openEditCollectionModal('${c.id}')">
+            <i data-lucide="edit-3" style="width:13px;height:13px;"></i> Edit
+          </button>
+          <button class="btn-danger" style="font-size:10px;padding:6px 12px;" onclick="deleteCollection('${c.id}')">
+            <i data-lucide="trash-2" style="width:13px;height:13px;"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>`).join('');
+
+  if (window.lucide) lucide.createIcons();
+}
+
+// ── COLLECTION MODAL ──────────────────────────────────────────────────────────
+window.openEditCollectionModal = function(collId) {
+  const modal   = document.getElementById('collection-form-modal');
+  const heading = document.getElementById('collection-modal-heading');
+  const c       = collId ? adminState.collections.find(x => x.id === collId) : null;
+
+  collUploadedBase64 = null;
+  const previewContainer = document.getElementById('coll-upload-preview-container');
+  const previewImg       = document.getElementById('coll-upload-preview-img');
+  const filenameText     = document.getElementById('coll-upload-filename-text');
+  const dropzone         = document.getElementById('coll-upload-dropzone');
+  const fileInput        = document.getElementById('form-coll-file');
+  if (fileInput) fileInput.value = '';
+
+  if (c) {
+    heading.textContent = `Edit — ${c.name}`;
+    document.getElementById('form-coll-id').value          = c.id;
+    document.getElementById('form-coll-name').value        = c.name || '';
+    document.getElementById('form-coll-desc').value        = c.description || '';
+    document.getElementById('form-coll-category').value    = c.category || 'Oud';
+    document.getElementById('form-coll-image-value').value = c.image || '';
+
+    if (c.image) {
+      if (previewImg) previewImg.src = c.image;
+      if (filenameText) filenameText.textContent = 'Current collection photo';
+      previewContainer?.classList.add('has-image');
+      if (dropzone) dropzone.style.display = 'none';
+    } else {
+      previewContainer?.classList.remove('has-image');
+      if (dropzone) dropzone.style.display = 'flex';
+    }
+  } else {
+    heading.textContent = 'Add Collection';
+    document.getElementById('collection-edit-form').reset();
+    document.getElementById('form-coll-id').value          = '';
+    document.getElementById('form-coll-image-value').value = '';
+    previewContainer?.classList.remove('has-image');
+    if (dropzone) dropzone.style.display = 'flex';
+  }
+
+  modal?.classList.add('open');
+  if (window.lucide) lucide.createIcons();
+};
+
+async function handleCollectionFormSubmit(e) {
+  e.preventDefault();
+  const id       = document.getElementById('form-coll-id').value;
+  const name     = document.getElementById('form-coll-name').value.trim();
+  const desc     = document.getElementById('form-coll-desc').value.trim();
+  const category = document.getElementById('form-coll-category').value;
+  let imageUrl   = document.getElementById('form-coll-image-value').value.trim();
+
+  // Upload image if a new file was selected
+  if (collUploadedBase64) {
+    try {
+      const upRes = await fetch('/api/upload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageBase64: collUploadedBase64 })
+      });
+      const upData = await upRes.json();
+      if (upData.success && upData.imageUrl) {
+        imageUrl = upData.imageUrl;
+      } else {
+        adminToast('Image upload failed: ' + (upData.error || 'Server error'), 'error');
+        return;
+      }
+    } catch (upErr) {
+      console.error(upErr);
+      adminToast('Error uploading image to server.', 'error');
+      return;
+    }
+  }
+
+  if (!name) {
+    adminToast('Please enter a collection name.', 'warn');
+    return;
+  }
+
+  if (!imageUrl) {
+    adminToast('Please upload a collection image.', 'warn');
+    return;
+  }
+
+  let collections = [...adminState.collections];
+
+  if (id) {
+    // Edit existing
+    const idx = collections.findIndex(c => c.id === id);
+    if (idx !== -1) {
+      collections[idx] = { ...collections[idx], name, description: desc, category, image: imageUrl };
+    }
+  } else {
+    // Add new
+    const newColl = {
+      id: `coll-${Date.now()}`,
+      name,
+      description: desc,
+      category,
+      image: imageUrl,
+      order: collections.length + 1
+    };
+    collections.push(newColl);
+  }
+
+  // Re-number order
+  collections.forEach((c, i) => c.order = i + 1);
+
+  await saveCollections(collections);
+  document.getElementById('collection-form-modal')?.classList.remove('open');
+  adminToast(id ? `${name} updated` : `${name} added to collections`, 'success');
+}
+
+async function saveCollections(collections) {
+  try {
+    const res = await fetch('/api/collections', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ collections })
+    });
+    const data = await res.json();
+    if (data.success) {
+      adminState.collections = data.collections || collections;
+      renderCollectionsList();
+    } else {
+      adminToast('Failed to save collections.', 'error');
+    }
+  } catch (e) {
+    adminToast('Network error saving collections.', 'error');
+  }
+}
+
+window.deleteCollection = async function(collId) {
+  const c = adminState.collections.find(x => x.id === collId);
+  const confirmed = await adminConfirm(
+    'Delete Collection',
+    `Remove "${c?.name || 'this collection'}" from the storefront? This cannot be undone.`,
+    'Delete'
+  );
+  if (!confirmed) return;
+
+  let collections = adminState.collections.filter(x => x.id !== collId);
+  collections.forEach((c, i) => c.order = i + 1);
+  await saveCollections(collections);
+  adminToast('Collection removed.', 'warn');
+};
+
+window.moveCollection = async function(idx, dir) {
+  const collections = [...adminState.collections];
+  const newIdx = idx + dir;
+  if (newIdx < 0 || newIdx >= collections.length) return;
+
+  // Swap
+  [collections[idx], collections[newIdx]] = [collections[newIdx], collections[idx]];
+  collections.forEach((c, i) => c.order = i + 1);
+  await saveCollections(collections);
+};
+
+function setupCollectionImageUpload() {
+  const fileInput = document.getElementById('form-coll-file');
+  const dropzone  = document.getElementById('coll-upload-dropzone');
+  const changeBtn = document.getElementById('btn-coll-change-image');
+
+  dropzone?.addEventListener('click', () => fileInput?.click());
+  changeBtn?.addEventListener('click', () => fileInput?.click());
+
+  fileInput?.addEventListener('change', e => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      adminToast('Please select a valid image file (PNG, JPG, or WEBP).', 'warn');
+      return;
+    }
+    if (file.size > 15 * 1024 * 1024) {
+      adminToast('Image file size must be under 15MB.', 'warn');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = evt => {
+      collUploadedBase64 = evt.target.result;
+      const previewContainer = document.getElementById('coll-upload-preview-container');
+      const previewImg       = document.getElementById('coll-upload-preview-img');
+      const filenameText     = document.getElementById('coll-upload-filename-text');
+
+      if (previewImg) previewImg.src = collUploadedBase64;
+      if (filenameText) filenameText.textContent = file.name;
+      previewContainer?.classList.add('has-image');
+      if (dropzone) dropzone.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 // ── TAB SWITCHING ─────────────────────────────────────────────────────────────
 window.switchTab = function(tabId) {
   adminState.activeTab = tabId;
@@ -853,6 +1116,14 @@ function setupListeners() {
   });
   document.getElementById('btn-add-size-row')?.addEventListener('click', () => window.addSizeRow('50ml', ''));
   document.getElementById('product-edit-form')?.addEventListener('submit', handleProductFormSubmit);
+
+  // Collection modal & image uploader
+  setupCollectionImageUpload();
+  document.getElementById('btn-open-add-collection')?.addEventListener('click', () => openEditCollectionModal(null));
+  document.getElementById('btn-close-collection-modal')?.addEventListener('click', () => {
+    document.getElementById('collection-form-modal')?.classList.remove('open');
+  });
+  document.getElementById('collection-edit-form')?.addEventListener('submit', handleCollectionFormSubmit);
 
   // Settings form
   document.getElementById('store-settings-form')?.addEventListener('submit', handleSettingsSubmit);
